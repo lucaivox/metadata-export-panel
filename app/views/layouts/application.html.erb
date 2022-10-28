@@ -11,6 +11,24 @@
   </head>
 
   <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <% if user_signed_in?%>
+  
+      <%= current_user.email %>
+      <%= current_user.id %>
+      <%= current_user.created_at %>
+      <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+      <%= link_to 'Account settings', edit_user_registration_path %>
+
+    <% else %>
+
+      <%= link_to 'Log in', new_user_session_path %>
+
+    <% end %>
+
+
     <%= yield %>
   </body>
 </html>
