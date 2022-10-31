@@ -1,1 +1,32 @@
-<h1>CIAONE</h1>
+<div class="d-flex align-items-center justify-content-center">
+    <div class="d-flex align-items-center justify-content-center">
+
+        <table style="height: 100px;">
+        <tbody>
+            <tr>
+
+                <td class="align-middle">
+                    <p class="muted">
+                        <h1>
+                            WELCOME TO METADATA EXPORTER
+                        </h1>
+                    </p>
+                   <% if user_signed_in? %>
+                    Hello <%= current_user.email %>
+                    <%= current_user.id %>
+                   <% else %>
+
+                        <p class="muted">
+                            Please <a href="/users/sign_in" data-bs-toggle="tooltip" data-bs-title="Default tooltip">login</a> to access to all export formats. 
+                        </p>
+
+                    <% end %>
+                </td>
+
+            </tr>
+        </tbody>
+        </table>
+
+
+    </div>
+</div>
