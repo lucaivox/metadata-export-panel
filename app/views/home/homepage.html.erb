@@ -12,8 +12,7 @@
                         </h1>
                     </p>
                    <% if user_signed_in? %>
-                    Hello <%= current_user.email %>
-                    <%= current_user.id %>
+                    Hello <%= current_user.name %> <%=current_user.surname%>, please go to the  <%= link_to "Export section", exports_path %> to run your exports.
                    <% else %>
 
                         <p class="muted">

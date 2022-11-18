@@ -1,5 +1,6 @@
 module ApplicationHelper
 
+    # manage flash alert class to add bootstra class based on alert
     def flash_class(level)
         bootstrap_alert_class = {
           "success" => "alert-success",
@@ -10,5 +11,5 @@ module ApplicationHelper
         }
         bootstrap_alert_class[level]
       end
-      
+
 end

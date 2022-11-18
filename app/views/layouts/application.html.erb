@@ -17,11 +17,7 @@
 
   <body>
 
-    <% flash.each do |key, message| %>
-      <div class="alert <%= flash_class(key) %> alert-dismissible fade show text-center" role="alert">
-        <%= message %>
-      </div>
-    <% end %>
+
 <!--
     <% if user_signed_in?%>
   
@@ -39,6 +35,12 @@
 -->
 
   <%= render partial: "shared/navbar"%>
+
+  <% flash.each do |key, message| %>
+    <div class="alert <%= flash_class(key) %> alert-dismissible fade show text-center" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
 
   <div class="container">
       <%= yield %>

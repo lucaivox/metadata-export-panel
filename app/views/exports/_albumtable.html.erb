@@ -1,0 +1,20 @@
+<table class="table table-striped">
+    <thead>
+        <tr> 
+            <th scope="col"> Select </th>
+            <th scope="col"> Album Code </th>
+            <th scope="col"> Album Title </th>
+            <th scope="col"> Album release date </th>
+        </tr> 
+    </thead>
+    <tbody>
+        <% for album in @all_albums["albums"] %>
+            <tr>
+                <td><input class="form-check-input" type="checkbox" id="<%= album["directory_name"]%>" value="<%album["directory_name"]%>" aria-label="..."></td>
+                <td><%= album["directory_name"].to_s %></td>
+                <td><%= album["name"].to_s %></td>
+                <td><%= album["release_date"].to_s %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
