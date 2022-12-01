@@ -1,3 +1,5 @@
+
+
 module ApplicationHelper
 
     # manage flash alert class to add bootstra class based on alert
@@ -12,4 +14,7 @@ module ApplicationHelper
         bootstrap_alert_class[level]
       end
 
+
 end
+
+

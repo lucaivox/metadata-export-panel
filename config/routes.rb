@@ -8,6 +8,6 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'home#dashboard'
 
   get 'exports', to: 'exports#exports'
-  post 'exports', to: 'exports#test'
+  post 'exports', to: 'exports#exports'
   
 end

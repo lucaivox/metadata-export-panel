@@ -1,22 +1,29 @@
 
 <div class="container">
 
+<%= @test_variable_on_view %>
+
 
   <div class="row">
     <div class="col-sm">
-      <h1>EXPORTS SECTION</h1> <%= @test %>
-    </div>
-    <div class="col-sm">
+      <h1>EXPORTS SECTION</h1> 
+
     </div>
     <div class="col-sm">
       Albums per page: 
-      <div class="btn-group" role="group" aria-label="Basic outlined example">
-        <button type="button" class="btn btn-outline-primary"><%= link_to "20", exports_path(per: 20, page: @page) %></button>
-        <button type="button" class="btn btn-outline-primary"><%= link_to "50", exports_path(per: 50, page: @page) %></button>
-        <button type="button" class="btn btn-outline-primary"><%= link_to "100", exports_path(per: 100, page: @page) %></button>
+      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" <%= @active20 %>>
+        <label class="btn btn-outline-primary" for="btnradio1"><%= link_to "20", exports_path(per: 20, page: @page, album_directory_name: @albumCodeFilter) %></label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" <%= @active50 %>>
+        <label class="btn btn-outline-primary" for="btnradio2"><%= link_to "50", exports_path(per: 50, page: @page, album_directory_name: @albumCodeFilter) %></label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" <%= @active100 %>>
+        <label class="btn btn-outline-primary" for="btnradio3"><%= link_to "100", exports_path(per: 100, page: @page, album_directory_name: @albumCodeFilter) %></label>
       </div>
     </div>
   </div>
+
 
   <div class="row">
     <div class="col">
@@ -30,17 +37,38 @@
     </div>
   </div>
 
+  <br>
   <div class="row">
     <div class="col">
-      <%= render 'albumtable'%>
+      <% if @albumCodeFilter %>
+        <div class="alert alert-dark" role="alert">
+          Active filters - album code: <b> <%= @albumCodeFilter %> </b>
+        </div>
+      <%end%>
     </div>
   </div>
 
+
   <div class="row">
     <div class="col">
-      <button type="submit" class="btn btn-primary">Submit</button>
+
+
+      <%= render 'albumtable'%>
+
+
     </div>
   </div>
+
+
+<%# Submit form of selected albums. Params is called requestedAlbums%>
+
+<%= form_with scope: :exports, url: exports_path(format: :csv), method: "post", local: true do |f| %>
+  <%= f.hidden_field :requested_albums%>
+  <%= f.submit "Submit", :class => 'btn btn-primary'%>
+<%end%>
+
+  <br>
+
 
   <div class="row">
     <div class="col">
@@ -48,9 +76,37 @@
     </div>
   </div>
 
-<%= form_for (exports, html: {class: '' }) do |f| %>
-  <%= f.label :name %>
-<%end%>
- 
-
 </div>
+
+    <script>
+
+
+    function changeRequestedAlbum(albumCode){
+
+      valueToChange = document.getElementById("exports_requested_albums").value;
+
+      if (valueToChange.charAt(0) == ','){
+        valueToChange = valueToChange.substring(1)
+      }
+
+      if (valueToChange.includes(albumCode)){
+        valueToChange = document.getElementById("exports_requested_albums").value.replace(albumCode,"")
+
+      }else{
+       valueToChange =  valueToChange + "," + albumCode
+
+      }
+      
+      if (valueToChange.charAt(0) == ','){
+        valueToChange = valueToChange.substring(1)
+      }      
+      if (valueToChange.charAt(valueToChange.length-1) == ','){
+        valueToChange = valueToChange.slice(0,-1)
+      }
+
+      valueToChange = valueToChange.replace(",,",",")
+
+      document.getElementById("exports_requested_albums").value = valueToChange
+
+    }
+    </script>
