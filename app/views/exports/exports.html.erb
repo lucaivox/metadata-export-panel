@@ -1,7 +1,7 @@
 
 <div class="container">
 
-<%= @test_variable_on_view %>
+<%= @export_results %>
 
 
   <div class="row">
@@ -28,9 +28,9 @@
   <div class="row">
     <div class="col">
       Select export
-        <select class="form-select" aria-label="Default select example">
+        <select id="select_export_type" class="form-select" aria-label="Default select example" onchange=exportType()>
           <option value="cms_format">CMS - CMS Format</option>
-          <option value="track_collecting_numbers">CMS - Export work numbers</option>
+          <option value="cms_track_collecting_numbers">CMS - Export work numbers</option>
           <option value="adrev">Audiofiles - AdRev, Content ID</option>
         </select>
       </div>
@@ -63,8 +63,9 @@
 <%# Submit form of selected albums. Params is called requestedAlbums%>
 
 <%= form_with scope: :exports, url: exports_path(format: :csv), method: "post", local: true do |f| %>
-  <%= f.hidden_field :requested_albums%>
-  <%= f.submit "Submit", :class => 'btn btn-primary'%>
+  <%= f.hidden_field :requested_albums %>
+  <%= f.hidden_field :export_type, :value => 'cms_format' %>
+  <%= f.submit "Submit", :class => 'btn btn-primary' %>
 <%end%>
 
   <br>
@@ -80,7 +81,7 @@
 
     <script>
 
-
+    //add checked albums in table to hidden form to send request
     function changeRequestedAlbum(albumCode){
 
       valueToChange = document.getElementById("exports_requested_albums").value;
@@ -107,6 +108,14 @@
       valueToChange = valueToChange.replace(",,",",")
 
       document.getElementById("exports_requested_albums").value = valueToChange
+
+    }
+
+    //change the export type in hidden form based on select on top page
+    function exportType(){
+      
+      valueToChange = document.getElementById("select_export_type").value;
+      document.getElementById("exports_export_type").value = valueToChange
 
     }
     </script>
