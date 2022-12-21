@@ -8,6 +8,19 @@ class ExportsController < ApplicationController
 
 	def exports
 
+
+    # test export with threads
+    # @testTrack = []
+    # @testTrack << SingleTrackRequest.new("").allTracksRequest(["6262",6263,6261])
+    # @testTrack << ExportMetadata.new(SingleAlbumRequest.new("ivox400").albumRequest).cms_format
+
+    # threads = []
+    # threads << Thread.new { @testTrack << TrackRequest.new(6257).trackRequest.filename }
+    # threads.each(&:join)
+
+
+
+
   
     if params[:exports]
       @testAlbums = params[:exports]
@@ -82,12 +95,14 @@ class ExportsController < ApplicationController
 
         #make a request for one album. Albums can be used as object with methods call like the json attributes e.g. name, track_list
         @single_album_response = SingleAlbumRequest.new(album_from_array).albumRequest
-        # @single_album_response = albumRequest(album_from_array)
+        # @testTrack = SingleTrackRequest.new(350456).trackRequest.filename
+        # @single_album_response = albumRequest(album_from_array)    
 
         #insert case to start export type
         case @export_type 
         when "cms_format"
-          @export_results = cms_format(@single_album_response)
+          @row_array_headers = ["album_label_code","album_label","album_code","album_name","album_ean_nr","track_title","track_filename","description"]
+          @export_results = ExportMetadata.new(@single_album_response).cms_format
 
         when "cms_track_collecting_numbers"
           @export_results = cms_track_collecting_numbers(@single_album_response)
@@ -98,56 +113,14 @@ class ExportsController < ApplicationController
         end
 
 
-        @all_requested_response_array = @all_requested_response_array | @export_results
+        @all_requested_response_array << @export_results
+        # @all_requested_response_array = @all_requested_response_array | @export_results
 
       end #end @requested_albums_array.each_with_index
     end #end if params[:exports] && params[:exports]["requested_albums"]
 	end #end def exports
 
 
-
-
-  def cms_format(album) #cms_format
-    row_array_headers = ["album_label_code","album_label","album_code","album_name","album_ean_nr","track_title","track_filename"]
-    document_rows = []
-    document_rows << row_array_headers
-    
-    album.tracks.each_with_index do |track_from_album, index|
-      row_array_values = []
-
-      #push label code
-      row_array_values << album.label_code
-
-      #push album label
-      row_array_values << album.labels[0].name
-
-      #push album_code
-      row_array_values << album.directory_name
-
-      #push album_name
-      row_array_values << album.name
-
-      #push album_ean_nr
-      row_array_values << album.ean
-
-      #---start tracks section
-      # instanciate object track to access to it like an object with methods called like the values of json
-      track_data = trackRequest(track_from_album.id)
-
-      #push track Title
-      row_array_values << track_data.name.html_safe
-
-      #push track_filename
-      row_array_values << track_data.filename
-
-
-      document_rows << row_array_values
-
-    end #end each track in album
-
-    return document_rows
-    
-  end
 
   def cms_track_collecting_numbers(album)
     row_array_headers = ["track_filename"]
@@ -159,7 +132,7 @@ class ExportsController < ApplicationController
 
       #---start tracks section
       # instanciate object track to access to it like an object with methods called like the values of json
-      track_data = trackRequest(track_from_album.id)
+      track_data = TrackRequest.new(track_from_album.id).trackRequest
 
       #push track_filename
       row_array_values << track_data.filename
@@ -175,16 +148,6 @@ class ExportsController < ApplicationController
 
   def download
   end
-
-  def trackRequest(track_id)
-
-    response = RestClient.get("https://cms.intervox.de/v2/partners/tracks/#{track_id}?token=#{INTERVOX_API_TOKEN}")
-    json = JSON.parse response
-
-    track = JSON.parse(response, object_class: OpenStruct)
-
-    return track.track
-end
 
 
 end

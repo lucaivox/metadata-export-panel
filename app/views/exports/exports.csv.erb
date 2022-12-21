@@ -1,3 +1,11 @@
-<% @all_requested_response_array.each do |row| %>
-<%= row.join(',') %>
-<%end %>
+<%=CSV.generate_line(@row_array_headers).html_safe -%>
+<%-@all_requested_response_array.each do |row| -%>
+<%-row.each do |element| -%>
+<%=CSV.generate_line(element).html_safe -%>
+<%-end-%>
+<%-end-%>
+
+<%# <% @all_requested_response_array.each do |row| %>
+<%# <%= row.join(',') %>
+<%# <%end %>
+

@@ -32,6 +32,7 @@ class SingleAlbumRequest
 		return album.album
 	end
 
+
 end
 
 

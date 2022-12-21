@@ -1,7 +1,9 @@
 
 <div class="container">
 
-<%= @export_results %>
+<%# <%= @export_results %>
+<%# <%= @export_results %> 
+
 
 
   <div class="row">
@@ -63,6 +65,7 @@
 <%# Submit form of selected albums. Params is called requestedAlbums%>
 
 <%= form_with scope: :exports, url: exports_path(format: :csv), method: "post", local: true do |f| %>
+<%# <%= form_with scope: :exports, url: exports_path, method: "post", local: true do |f| %> 
   <%= f.hidden_field :requested_albums %>
   <%= f.hidden_field :export_type, :value => 'cms_format' %>
   <%= f.submit "Submit", :class => 'btn btn-primary' %>
@@ -80,7 +83,6 @@
 </div>
 
     <script>
-
     //add checked albums in table to hidden form to send request
     function changeRequestedAlbum(albumCode){
 
