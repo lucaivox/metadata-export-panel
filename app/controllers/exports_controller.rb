@@ -19,8 +19,6 @@ class ExportsController < ApplicationController
     # threads.each(&:join)
 
 
-
-
   
     if params[:exports]
       @testAlbums = params[:exports]
@@ -93,6 +91,14 @@ class ExportsController < ApplicationController
       #loop through all requested albums
       @requested_albums_array.each_with_index do |album_from_array, index|
 
+        ActionCable.server.broadcast 'ExportsChannel',
+          { album: album_from_array,
+            loader: true,
+            current: index,
+            total: @requested_albums_array.length
+          }
+
+
         #make a request for one album. Albums can be used as object with methods call like the json attributes e.g. name, track_list
         @single_album_response = SingleAlbumRequest.new(album_from_array).albumRequest
         # @testTrack = SingleTrackRequest.new(350456).trackRequest.filename
@@ -118,6 +124,12 @@ class ExportsController < ApplicationController
 
       end #end @requested_albums_array.each_with_index
     end #end if params[:exports] && params[:exports]["requested_albums"]
+    
+    #send info that exports are done and hide loader
+    ActionCable.server.broadcast 'ExportsChannel',
+    { 
+      loader: false,
+    }
 	end #end def exports
 
 
