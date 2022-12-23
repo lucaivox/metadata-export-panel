@@ -28,8 +28,7 @@ window.changeRequestedAlbum = function (albumCode){
 
     //add here change status check for select all
 
-    if (document.getElementById("exports_requested_albums").value != ""){
-        
+    if (document.getElementById("exports_requested_albums").value != "" && document.getElementById("selectAllCheckbox").checked == false ){
         document.getElementById("selectAllCheckbox").indeterminate = true
     }
     else{
@@ -46,9 +45,13 @@ window.exportType = function (){
 
 }
 
+//use the select all checkbox
 window.selectAllCheckboxes = function(){
-    var table = document.getElementById("albumTable");
+
+    //first thing, set requested album in form as empty
+    document.getElementById("exports_requested_albums").value = ""
     
+    //then for each td marck checkboxes
     var cbs = document.getElementsByTagName('input');
     for(var i=6; i < cbs.length; i++) {
       if(cbs[i].type == 'checkbox') {
@@ -61,15 +64,9 @@ window.selectAllCheckboxes = function(){
         }
         if (document.getElementById("selectAllCheckbox").checked == false){
             console.log("checked true")
-            changeRequestedAlbum(cbs[i].name)
+            document.getElementById("selectAllCheckbox").indeterminate = false
             cbs[i].checked = false;
         }
-        // if (document.getElementById("selectAllCheckbox").indeterminate == true){
-        //     console.log("indeterminate true")
-        //     changeRequestedAlbum(cbs[i].name)
-        //     cbs[i].checked = true;
-        // }
-        
       }
     }
 }

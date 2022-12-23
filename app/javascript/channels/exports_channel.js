@@ -29,7 +29,7 @@ consumer.subscriptions.create("ExportsChannel", {
 
       //add current exporting album
       loader = document.getElementById("spinner-text")
-      loader.innerHTML = "Exporting album " + data.album
+      loader.innerHTML = "<b>Exporting album " + data.album + "</b>"
 
       //add what album is currently exporting on queue
       loader = document.getElementById("spinner-text2")

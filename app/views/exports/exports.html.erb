@@ -16,13 +16,13 @@
       Albums per page: 
       <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" <%= @active20 %>>
-        <label class="btn btn-outline-primary" for="btnradio1"><%= link_to "20", exports_path(per: 20, page: @page, album_directory_name: @albumCodeFilter) %></label>
+        <label class="btn btn-outline-primary" for="btnradio1"><%= link_to "20", exports_path(per: 20, page: @page, album_directory_name: @albumCodeFilter), class: "text-black"%></label>
 
         <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" <%= @active50 %>>
-        <label class="btn btn-outline-primary" for="btnradio2"><%= link_to "50", exports_path(per: 50, page: @page, album_directory_name: @albumCodeFilter) %></label>
+        <label class="btn btn-outline-primary" for="btnradio2"><%= link_to "50", exports_path(per: 50, page: @page, album_directory_name: @albumCodeFilter), class: "text-black" %></label>
 
         <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" <%= @active100 %>>
-        <label class="btn btn-outline-primary" for="btnradio3"><%= link_to "100", exports_path(per: 100, page: @page, album_directory_name: @albumCodeFilter) %></label>
+        <label class="btn btn-outline-primary" for="btnradio3"><%= link_to "100", exports_path(per: 100, page: @page, album_directory_name: @albumCodeFilter), class: "text-black" %></label>
       </div>
     </div>
   </div>
@@ -44,8 +44,13 @@
   <div class="row">
     <div class="col">
       <% if @albumCodeFilter %>
-        <div class="alert alert-dark" role="alert">
-          Active filters - album code: <b> <%= @albumCodeFilter %> </b>
+        <div class="alert alert-dark row" role="alert">
+          <div class="col">
+            Active filters - album code: <b> <%= @albumCodeFilter %> </b>
+          </div>
+          <div class ="col float-end">
+           <b><i class="bi bi-x float-end"><%= link_to "x", exports_path(per: @per), class: "page-link" %></b></i>
+          </div>
         </div>
       <%end%>
     </div>
@@ -82,6 +87,8 @@
   </div>
 
 </div>
+
+
 
     <script>
 

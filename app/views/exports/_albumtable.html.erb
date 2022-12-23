@@ -1,12 +1,30 @@
 
     
+  <div class="row">
+    <div class="col">
+        <%= form_with scope: :exports, url: exports_path, method: "get", local: true do |f| %>
+            <%= f.label :album_directory_name %><br>
+            <%= f.text_field :album_directory_name %>
+            <%= f.submit "Filter", :class => 'btn btn-primary btn-sm' %>
+        <%end%>
+    </div>
+    <div class="col">
+        <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+        <label class="form-check-label" for="flexRadioDefault1">
+            Comma Separated
+        </label>
+        </div>
+        <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+        <label class="form-check-label" for="flexRadioDefault2">
+            Semicolon Separated
+        </label>
+        </div>
+    </div>
+  </div>
 
 
-    <%= form_with scope: :exports, url: exports_path, method: "get", local: true do |f| %>
-        <%= f.label :album_directory_name %><br>
-        <%= f.text_field :album_directory_name %>
-        <%= f.submit "Filter", :class => 'btn btn-primary btn-sm' %>
-    <%end%>
     
     <br>
     
